@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import links from '../data/dataLinks';
+import LinkCard from '../components/LinkCard.astro';
+---
+
+<Layout>
+	<main class="container">
+		<div class="bg-container">
+			<div class="bg">
+				<img src="images/test-bg-linktree.png" alt="bg-img" srcset="">
+			</div>
+			<div class="blur-bg">
+			</div>
+		</div>
+
+		<section class="main-container">
+			<div class="main-bg">
+				<img src="images/test-bg-linktree.png" alt="bg-img" srcset="">
+			</div>
+
+			<header class="profile">
+				<h1 id="title" class="code-title">Buenos Aires, Argentina</h1>
+				<div class="p-container">
+					<p id="subtitle" class="code-title">Developer & Designer</p>
+				</div>
+			</header>
+	
+			<nav class="links-container">
+				<div class="star">
+					<div class="star-inner">
+						<div class="star-line line1"></div>
+						<div class="star-line line2"></div>
+						<div class="star-line line3"></div>
+						<div class="star-line line4"></div>
+					</div>
+				</div>
+
+				<section class="links">
+					<a class="link-card" href={links[0].href} target="_blank" rel="noopener noreferrer">
+						<div class="link-content h3-clip">
+							<h3 class="animated-h3">{links[0].title}</h3>
+						</div>
+					</a>
+					<a class="link-card" href={links[1].href} target="_blank" rel="noopener noreferrer">
+						<div class="line"></div>
+						<div class="link-content h3-clip">
+							<h3 class="animated-h3">{links[1].title}</h3>
+						</div>
+					</a>
+					<a class="link-card" href={links[2].href} target="_blank" rel="noopener noreferrer">
+						<div class="link-content h3-clip">
+							<h3 class="animated-h3">{links[2].title}</h3>
+						</div>
+					</a>
+				</section>
+				<section class="bio-container">
+					<p class="bio">I do pretty websites and other cool stuff.</p>
+					<div class="bio-img">
+						<img src="images/test-bg-linktree.png" alt="" srcset="">
+					</div>
+				</section>
+				<footer class="rights-container">
+					<p>© 2024</p>
+					<p>@sbas</p>
+				</footer>
+			</nav>
+		</section>
+
+		</main>
+
+	<style>
+		.code-title{ font-family: monospace; letter-spacing:0.04em; white-space:pre; width:140px; display: flex; flex-wrap:wrap;}
+		.code-title span{ display:inline-block; min-width:0.6ch;}
+		.code-title::selection{ background: rgba(255,255,255,0.08); }
+		.h3-clip { overflow: hidden; display: inline-block; }
+		.animated-h3 { display: flex; gap: 0.01em; }
+		.animated-h3 span { display: inline-block; will-change: transform, opacity; font-family: 'Times New Roman', Times, serif; }
+	</style>
+	<script >
+		import { gsap } from 'gsap';
+
+		const randomDigits = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+
+		function scrambleSpan(span: any) {
+			const interval = setInterval(() => {
+				span.textContent = randomDigits[Math.floor(Math.random() * randomDigits.length)];
+			}, 20);
+			return interval;
+		}
+
+		function animateText(id: any) {
+			const el = document.getElementById(id);
+			if (!el) return;
+			const text = el.textContent || '';
+			el.textContent = '';
+			const chars = text.split('');
+			const spans = chars.map(ch => {
+				const s = document.createElement('span');
+				s.textContent = ch === ' ' ? ' ' : '';
+				el.appendChild(s);
+				return { el: s, char: ch };
+			});
+
+			spans.forEach((item, i) => {
+				if (item.char === ' ') return;
+				const delay = i * 0.05 + Math.random() * 0.1;
+				const duration = 0.6 + Math.random() * 0.6;
+				let intrvl: any;
+				gsap.delayedCall(delay, () => {
+					intrvl = scrambleSpan(item.el);
+					gsap.delayedCall(duration, () => {
+						clearInterval(intrvl);
+						item.el.textContent = item.char;
+						gsap.fromTo(item.el, { y: -6, opacity: 0 }, { y: 0, opacity: 1, duration: 0.2 });
+					});
+				});
+			});
+		}
+
+		function animateH3s() {
+			const h3s = document.querySelectorAll('.animated-h3');
+			h3s.forEach(h3 => {
+				const text = h3.textContent || '';
+				h3.textContent = '';
+				const chars = text.split('');
+				const spans = chars.map(ch => {
+					const s = document.createElement('span');
+					s.textContent = ch === ' ' ? ' ' : ch;
+					h3.appendChild(s);
+					return s;
+				});
+				gsap.set(spans, { y: 32, opacity: 0 });
+				gsap.to(spans, {
+					y: 0,
+					opacity: 1,
+					duration: 0.5,
+					stagger: 0.04,
+					ease: 'power2.out',
+					delay: 0.2
+				});
+			});
+		}
+
+		animateText('title');
+		animateText('subtitle');
+		animateH3s();
+	</script>
+
+
+</Layout>

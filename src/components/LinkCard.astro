@@ -1,0 +1,8 @@
+---
+const { title, href } = Astro.props;
+---
+<a class="link-card" href={href} target="_blank" rel="noopener noreferrer">
+    <div class="link-content">
+        <h3>{title}</h3>
+    </div>
+</a>
