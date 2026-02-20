@@ -10,7 +10,7 @@ body{
   margin:0;
   font-family: 'Fira Code', monospace;
   font-weight: normal;
-  font-size: 1rem;
+  font-size: 0.75rem;
   height: 100lvh;
   overflow: hidden;
 }
@@ -53,7 +53,7 @@ body{
     flex-direction: column;
     justify-content: end;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: normal;
     position: relative;
 }
 
