@@ -115,7 +115,6 @@ body{
     width: 5rem;
     height: 2px;
     background-color: var(--secondary);
-    margin-bottom: 0.4rem;
   }
 }
 .link-content h3{
@@ -156,8 +155,8 @@ body{
   width: 20px;
   height: 20px;
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 1.25rem;
+  right: 1.25rem;
 }
 .star .star-inner{
   position: relative;

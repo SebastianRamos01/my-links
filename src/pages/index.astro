@@ -1,14 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import links from '../data/dataLinks';
-import LinkCard from '../components/LinkCard.astro';
 ---
 
 <Layout>
 	<main class="container">
 		<div class="bg-container">
 			<div class="bg">
-				<img src="images/test-img.jpeg" alt="bg-img" srcset="">
+				<img src="images/test-img.jpeg" alt="main-img" srcset="">
 			</div>
 			<div class="blur-bg">
 			</div>
@@ -16,7 +15,7 @@ import LinkCard from '../components/LinkCard.astro';
 
 		<section class="main-container">
 			<div class="main-bg">
-				<img src="images/test-img.jpeg" alt="bg-img" srcset="">
+				<img src="images/test-img.jpeg" alt="main-img" srcset="">
 			</div>
 
 			<header class="profile">
@@ -43,7 +42,9 @@ import LinkCard from '../components/LinkCard.astro';
 						</div>
 					</a>
 					<a class="link-card" href={links[1].href} target="_blank" rel="noopener noreferrer">
-						<div class="line"></div>
+						<div class="line" style="overflow:hidden;">
+							<div class="animated-line"></div>
+						</div>
 						<div class="link-content h3-clip">
 							<h3 class="animated-h3">{links[1].title}</h3>
 						</div>
@@ -57,7 +58,7 @@ import LinkCard from '../components/LinkCard.astro';
 				<section class="bio-container">
 					<p class="bio">I do pretty websites and other cool stuff.</p>
 					<div class="bio-img">
-						<img src="images/secondary-test-img.jpeg" alt="" srcset="">
+						<img src="images/secondary-test-img.jpeg" alt="secondary-img" srcset="">
 					</div>
 				</section>
 				<footer class="rights-container">
@@ -70,12 +71,29 @@ import LinkCard from '../components/LinkCard.astro';
 		</main>
 
 	<style>
-		.code-title{ font-family: monospace; letter-spacing:0.04em; white-space:pre; width:100px; display: flex; flex-wrap:wrap;}
-		.code-title span{ display:inline-block; min-width:0.6ch;}
-		.code-title::selection{ background: rgba(255,255,255,0.08); }
-		.h3-clip { overflow: hidden; display: inline-block; }
-		.animated-h3 { display: flex; gap: 0.01em; }
-		.animated-h3 span { display: inline-block; will-change: transform, opacity; font-family: 'Times New Roman', Times, serif; }
+	       .code-title{ font-family: monospace; letter-spacing:0.04em; white-space:pre; width:100px; display: flex; flex-wrap:wrap;}
+	       .code-title span{ display:inline-block; min-width:0.6ch;}
+	       .code-title::selection{ background: rgba(255,255,255,0.08); }
+	       .h3-clip { overflow: hidden; display: inline-block; }
+	       .animated-h3 { display: flex; gap: 0.01em; }
+	       .animated-h3 span { display: inline-block; will-change: transform, opacity; font-family: 'Times New Roman', Times, serif; }
+		       .line {
+			       width: 6rem;
+			       height: 8px;
+			       background: none;
+			       margin-right: 0.3rem;
+			       overflow: hidden;
+			       display: flex;
+			       align-items: center;
+		       }
+		       .animated-line {
+			       width: 100%;
+			       height: 2px;
+			       background: var(--secondary);
+			       position: relative;
+			       left: 0;
+			       opacity: 1;
+		       }
 	</style>
 	<script >
 		import { gsap } from 'gsap';
@@ -142,9 +160,25 @@ import LinkCard from '../components/LinkCard.astro';
 			});
 		}
 
-		animateText('title');
-		animateText('subtitle');
-		animateH3s();
+		       animateText('title');
+		       animateText('subtitle');
+		       animateH3s();
+
+			       // Animación GSAP para las líneas
+			       function animateLines() {
+				       const lines = document.querySelectorAll('.animated-line');
+				       lines.forEach((line, idx) => {
+					       gsap.set(line, { x: '-120%', opacity: 0 });
+					       gsap.to(line, {
+						       x: '0%',
+						       opacity: 1,
+						       duration: 0.8,
+						       ease: 'power2.out',
+						       delay: idx * 0.15
+					       });
+				       });
+			       }
+			       animateLines();
 	</script>
 
 
