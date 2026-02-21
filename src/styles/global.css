@@ -8,8 +8,8 @@ html,body{height:100%}
 
 body{
   margin:0;
-  font-family: 'Fira Code', monospace;
-  font-weight: 600;
+  font-family: monospace;
+  font-weight: 500;
   font-size: 0.75rem;
   height: 100lvh;
   overflow: hidden;
